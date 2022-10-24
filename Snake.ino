@@ -77,83 +77,7 @@ int startCounter = 0;
 void loop() {
 
   //moveDot();
-  //snakeMovement();
-  if(!start && !ended || start && ended){
-    for(int i = 0; i < 8; i++){
-      digitalWrite(i+2, HIGH);
-      for(int n = 0; n < 8; n++){
-        if(gameMenu[0]){
-          if(snake_matrix[i][n] == 1){            
-             digitalWrite(n+23, LOW);
-          }
-        }     
-      }
-      menuSelect();
-      gameSelect();
-      turnOffAll();
-    }
-  }else{
-    if(gameMenu[0]){
-      snakeMovement(); 
-    }else if(gameMenu[1]){
-      snakeMovement();  
-    }else if(gameMenu[2]){
-      snakeMovement();    
-    }
-  }
-}
-
-void menuSelect(){
-  if(analogRead(A0) == 1023){
-    for(int i = 2; i >= 0; i--){
-      if(gameMenu[i]){
-        gameMenu[i] = false;
-        if(i!=0){
-          gameMenu[i-1] = true;
-        }else{
-          gameMenu[2] = true;
-        }
-        break;
-      }
-    }
-    turnOffAll();
-    delay(300);
-    //Serial.println("LEFT");
-  }else if(analogRead(A1) == 1023){
-    //turnOffAll();
-    for(int i = 0; i < 3; i++){
-      if(gameMenu[i]){
-        gameMenu[i] = false;
-        if(i!=2){
-          gameMenu[i+1] = true;
-        }else{
-          gameMenu[0] = true;
-        }
-        break;
-      }
-    }
-    turnOffAll();
-    delay(300);
-    //Serial.println("RIGHT");
-  }  
-}
-
-void gameSelect(){
-  if(analogRead(A3) == 1023){
-    turnOffAll();
-    clearMatrix();
-    delay(1000);
-    if(ended && !start){
-       start = true;
-    }else{
-      start = true;
-      ended = false;
-      
-    }  
-    if(gameMenu[0]){
-      resetSnake();
-    }
-  }
+  snakeMovement();
 }
 
 //включва всички светодиоди в матрицата
@@ -314,7 +238,6 @@ void snakeMovement(){
            digitalWrite(n+23, LOW);
         }    
       }
-      
       turnOffAll();
     }
   }else if(ended && !start){
@@ -326,7 +249,6 @@ void snakeMovement(){
            digitalWrite(n+23, LOW);
         }    
       }
-      gameSelect();
       turnOffAll();
     } 
   } 
@@ -440,6 +362,5 @@ void addDotToSnake(){
     }
   }
 
-  matrix[snakeDotsY[snakeLength]][snakeDotsX[snakeLength]] = 1;
-  
+  matrix[snakeDotsY[snakeLength]][snakeDotsX[snakeLength]] = 1; 
 }
